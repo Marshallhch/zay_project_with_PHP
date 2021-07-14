@@ -1,0 +1,14 @@
+/* Sample Style Code */
+html{position:relative; min-height:100%;}
+body.join_login{min-height:100%;}
+
+section.join{width:100%; display:flex; flex-direction: column; align-items: center; position:absolute; top:50%; transform:translateY(-50%);}
+section.join .mem_form_box{width:100%; background:#eee; padding:20px;}
+section.join .mem_form_box form{display:flex; flex-direction: column; align-items: center;}
+section.join .mem_form_box p{width:50%; display:flex; margin:2px 0; justify-content: space-between;}
+section.join label{width:20%; padding:10px 20px; background:#59ab6e; display:inline-block; color:#fff; text-align: center;}
+section.join .mem_form_box p:nth-child(1) input{width:calc(60% - 8px);}
+section.join .mem_form_box p:nth-child(1) button{width:20%;}
+section.join input{width:calc(80% - 4px);}
+
+footer{width:100%; height:auto; text-align:center; background:#212934; color:#fff; padding:20px 0;position:fixed; left:0; bottom:0;}

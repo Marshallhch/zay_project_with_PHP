@@ -15,28 +15,67 @@
   <link rel="stylesheet" href="/zay/css/reset.css">
   <!-- Main Style CSS Link -->
   <link rel="stylesheet" href="/zay/css/style.css">
+  <link rel="stylesheet" href="/zay/css/join_login.css">
   <!-- Media Style CSS Link -->
   <link rel="stylesheet" href="/zay/css/media.css">
 </head>
-<body>
+<body class="join_login">
 
   <?php include $_SERVER["DOCUMENT_ROOT"]."/zay/include/header.php"; ?>
 
-  <form action="/zay/php/insert_mem.php" method="post" name="mem_form" enctype="multipart/form-data">
-    <p>아이디 : <input type="text" name="mem_id"></p>
-    <!-- 아이디 중복체크 -->
-    <p>비밀번호 : <input type="password" name="mem_pass"></p>
-    <p>비밀번호 확인 : <input type="password" name="mem_pass_check"></p>
-    <p>프로필 사진 : <input type="file" name="mem_pf"></p>
-    <p>이름 : <input type="text" name="mem_name"></p>
-    <p>이메일 : <input type="text" name="mem_email"></p>
+  <section class="join">
+    <div class="center">
+      <div class="mem_form_box">
+        <form action="/zay/php/insert_mem.php" method="post" name="mem_form" enctype="multipart/form-data" class="mem_form">
+          <p>
+            <label for="mem_id">아이디</label>
+            <input type="text" name="mem_id" id="mem_id">
+            <button type="button">중복체크</button>
+          </p>
+          <!-- 아이디 중복체크 -->
+          <p>
+            <label for="mem_pass">비밀번호</label>
+            <input type="password" name="mem_pass" autocomplete="off" id="mem_pass">
+          </p>
+          <p>
+            <label for="mem_pass_check">비밀번호 확인</label>
+            <input type="password" name="mem_pass_check" autocomplete="off" id="mem_pass_check">
+          </p>
+          <p>
+            <label for="mem_pf">프로필 사진</label>
+            <input type="file" name="mem_pf" id="mem_pf">
+          </p>
+          <p>
+            <label for="mem_name">이름</label>
+            <input type="text" name="mem_name" id="mem_name">
+          </p>
+          <p>
+            <label for="mem_email">이메일</label>
+            <input type="text" name="mem_email" id="mem_email">
+          </p>
 
-    <button type="button" id="submit_btn">제출</button>
-  </form>
+          <button type="button" id="submit_btn">회원가입</button>
+        </form>
+        <div class="still_not">
+          <em>아직 회원이 아니시면</em>
+          <a href="#">Click</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>Designed By ProjectMong Co.LTD</p>
+  </footer>
 
   <!-- jQuery Framework Load -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="/zay/js/jq.main.js"></script>
+  <script>
+    $(function(){
+       
+    });
+  </script>
   <script>
 
     const submitBtn = document.querySelector("#submit_btn");
