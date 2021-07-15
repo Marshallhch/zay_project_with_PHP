@@ -24,7 +24,10 @@
 
   <div class="wrap">
 
-    <?php include $_SERVER["DOCUMENT_ROOT"]."/zay/include/header.php"; ?>
+    <?php 
+      include $_SERVER["DOCUMENT_ROOT"]."/zay/include/header.php"; 
+      include $_SERVER["DOCUMENT_ROOT"]."/connect/db_conn.php";
+    ?>
 
     <!-- Slider Landing Section -->
     <section class="slider">
@@ -81,33 +84,29 @@
           <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt<br> mollit anim id est laborum.</p>
         </div>
         <div class="cate_box">
+          <?php 
+          //상품 카테고리 분류 배열
+          $cate_arr = array('watches', 'shoes', 'accessories');
+          
+          for($i = 0; $i < count($cate_arr); $i++){
+            $sql = "SELECT * FROM zay_pro WHERE ZAY_pro_cate='{$cate_arr[$i]}' ORDER BY ZAY_pro_idx DESC LIMIT 1";
+
+            $cate_result = mysqli_query($dbConn, $sql);
+            $cate_result_row = mysqli_fetch_array($cate_result);
+
+            $cate_img = $cate_result_row['ZAY_pro_img_01'];
+            $cate_tit = $cate_result_row['ZAY_pro_cate'];
+          ?>
           <!-- Loop of Cate Item -->
           <div class="cate_item">
             <div class="cate_img">
-              <img src="/zay/img/category_img_01.jpg" alt="">
+              <img src="/zay/data/product_imgs/<?=$cate_img?>" alt="">
             </div>       
-            <h3>Watches</h3>
+            <h3><?=$cate_tit?></h3>
             <a href="#" class="main_btn">Go Shop</a>
           </div>
           <!-- End of Loop of Cate Item -->
-          <!-- Loop of Cate Item -->
-          <div class="cate_item">
-            <div class="cate_img">
-              <img src="/zay/img/category_img_02.jpg" alt="">
-            </div>       
-            <h3>Watches</h3>
-            <a href="#" class="main_btn">Go Shop</a>
-          </div>
-          <!-- End of Loop of Cate Item -->
-          <!-- Loop of Cate Item -->
-          <div class="cate_item">
-            <div class="cate_img">
-              <img src="/zay/img/category_img_03.jpg" alt="">
-            </div>       
-            <h3>Watches</h3>
-            <a href="#" class="main_btn">Go Shop</a>
-          </div>
-          <!-- End of Loop of Cate Item -->
+          <?php } ?>
         </div>
       </div>
     </section>
