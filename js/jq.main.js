@@ -59,5 +59,32 @@ $(function(){
   }
 
   loadMore();
+
+  //featured item images height fit to responsive width
+  const imgHeightFit = function(){
+    const featuredImgWidth = $(".featured_img").outerWidth();
+    $(".featured_img").outerHeight(featuredImgWidth);
+  
+    $(window).resize(function(){
+      const featuredImgWidth = $(".featured_img").outerWidth();
+      $(".featured_img").outerHeight(featuredImgWidth);
+    });
+  }
+  
+  imgHeightFit();
+
+  //detail page image tabs function
+  const detailTabs = function(){
+    $(".detail_tab_btns span").click(function(){
+      const index = $(this).index();
+  
+      $(".detail_img>img").hide();
+      $(".detail_img>img").eq(index).show();
+    });
+  
+    $(".detail_tab_btns span").eq(0).trigger("click");
+  }
+  
+  detailTabs();
   
 });
