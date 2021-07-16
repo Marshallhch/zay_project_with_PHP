@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1" />
-  <title>Zay Shop || Admin</title>
+  <title>Zay Shop || Detail</title>
   <!-- Favicon Link -->
   <link rel="shortcut icon" href="/zay/img/favicon.ico" type="image/x-icon">
   <link rel="icon" href="/zay/img/favicon.ico" type="image/x-icon">
@@ -17,74 +17,138 @@
   <link rel="stylesheet" href="/zay/css/style.css">
   <!-- Media Style CSS Link -->
   <link rel="stylesheet" href="/zay/css/media.css">
-  <style>
-    input, textarea{border:1px solid;}
-    textarea{resize:both;}
-  </style>
 </head>
 <body>
+  <div class="wrap">
 
-  <?php include $_SERVER["DOCUMENT_ROOT"]."/zay/include/header.php"; ?>
+    <?php include $_SERVER["DOCUMENT_ROOT"]."/zay/include/header.php"; ?>
 
-  <section class="pro_insert">
-    <div class="center">
-      <div class="detail_contents">
-        <div class="detail_img">
-          <img src="/zay/data/product_imgs/watch_3_1.jpg" alt="">
-          <img src="/zay/data/product_imgs/watch_3_2.jpg" alt="">
-          <div class="detail_tab_btns">
-            <span><img src="/zay/data/product_imgs/watch_3_1.jpg" alt=""></span>
-            <span><img src="/zay/data/product_imgs/watch_3_2.jpg" alt=""></span>
+    <section class="pro_insert">
+      <div class="center">
+        <div class="detail_contents">
+
+          <?php
+          $pro_idx = $_GET['pro_idx'];
+          include $_SERVER["DOCUMENT_ROOT"]."/connect/db_conn.php";
+          $sql = "SELECT * FROM zay_pro WHERE ZAY_pro_idx='{$pro_idx}'";
+          
+          $detail_result = mysqli_query($dbConn, $sql);
+          $detail_row = mysqli_fetch_array($detail_result);
+
+          $detail_img_1 = $detail_row['ZAY_pro_img_01'];
+          $detail_img_2 = $detail_row['ZAY_pro_img_02'];
+          $detail_tit = $detail_row['ZAY_pro_name'];
+          $detail_pri = $detail_row['ZAY_pro_pri'];
+          $detail_desc = $detail_row['ZAY_pro_desc'];
+          $detail_color = $detail_row['ZAY_pro_color'];
+          $detail_bran = $detail_row['ZAY_pro_bran'];
+          ?>
+
+          <div class="detail_img">
+            <img src="/zay/data/product_imgs/<?=$detail_img_1?>" alt="">
+            <img src="/zay/data/product_imgs/<?=$detail_img_2?>" alt="">
+            <div class="detail_tab_btns">
+              <span><img src="/zay/data/product_imgs/<?=$detail_img_1?>" alt=""></span>
+              <span><img src="/zay/data/product_imgs/<?=$detail_img_2?>" alt=""></span>
+            </div>
+          </div>
+          <div class="detail_txt">
+            <div class="detail_wrap">
+              <div class="detail_top">
+                <h2><?=$detail_tit?></h2>
+                <p><span><i class="fa fa-krw"></i> <?=$detail_pri?></span></p>
+                <div class="detail_like">
+                  <div class="like_unlike">
+                    <span>좋아요 | <b>20</b></span>
+                    <span>별로에요 | <b>11</b></span>
+                  </div>     
+                  <p class="gray">Brand : <?=$detail_bran?></p>
+                  <div class="detail_desc">
+                    <h3>상품설명</h3>
+                    <p><?=$detail_desc?></p>
+                  </div>
+                  <p class="gray">Available Color : <?=$detail_color?></p>       
+                </div>
+                <!-- end of detail_like -->
+              </div>
+
+              <div class="size_quan">
+                <div class="size">
+                  <p>Size : 
+                    <span>S</span>
+                    <span>M</span>
+                    <span>S</span>
+                    <span>XL</span>
+                  </p>
+                  <p>Quantity 
+                    <span>-</span>
+                    <b>1</b>
+                    <span>+</span>
+                  </p>
+                </div>
+                <div class="detail_btns">
+                  <button type="button">BUY NOW</button>
+                  <button type="button">ADD TO CART</button>
+                </div>
+              </div>
+              <!-- end of size quantity -->
+            </div>
           </div>
         </div>
-        <div class="detail_txt">
-          <div class="detail_wrap">
-            <div class="detail_top">
-              <h2>멋찐 시계</h2>
-              <p><span><i class="fa fa-krw"></i> 50,000</span></p>
-              <div class="detail_like">
-                <div class="like_unlike">
-                  <span>좋아요 | <b>20</b></span>
-                  <span>별로에요 | <b>11</b></span>
-                  <span class="comments">20 <b>Comments</b></span>
-                </div>     
-                <p class="gray">Brans : Easy Wear</p>
-                <div class="detail_desc">
-                  <h3>상품설명</h3>
-                  <p>국회의원은 국회에서 직무상 행한 발언과 표결에 관하여 국회외에서 책임을 지지 아니한다. 대법원은 법률에 저촉되지 아니하는 범위안에서 소송에 관한 절차, 법원의 내부규율과 사무처리에 관한 규칙을 제정할 수 있다.</p>
-                </div>
-                <p class="gray">Available Color : White / Black</p>       
-              </div>
-              <!-- end of detail_like -->
-            </div>
+        <!-- end of detail-contents -->
+      </div>
+    </section>
 
-            <div class="size_quan">
-              <div class="size">
-                <p>Size : 
-                  <span>S</span>
-                  <span>M</span>
-                  <span>S</span>
-                  <span>XL</span>
-                </p>
-                <p>Quantity 
-                  <span>-</span>
-                  <b>1</b>
-                  <span>+</span>
-                </p>
-              </div>
-              <div class="detail_btns">
-                <button type="button">BUY NOW</button>
-                <button type="button">ADD TO CART</button>
-              </div>
-            </div>
-            <!-- end of size quantity -->
+    <section class="comments">
+      <div class="center">
+        <div class="comments_tit">
+          <span>상품평</span> |
+          <span><em>15</em> Comments</span>
+        </div>
+        <div class="comment_insert">
+          <form action="#" method="post" name="comment_form">
+            <textarea type="text" placeholder="상품평을 입력해 주세요." name="comment_txt"></textarea>
+            <button type="button">입력</button>
+          </form>
+        </div>
+        <div class="comment_contents">
+          <!-- Loop Comments -->
+          <div class="loop_contents">
+            <div class="comments_tit">
+              <span>marshall36</span> |
+              <span>2021-07-16 14:36:15</span>
+            </div>        
+            <div class="comments_text">
+              <span class="txt">
+                <em>상품이 별로에요. 배송도 느려요.</em>
+              </span>
+              <span class="comment_btns">
+                <button type="button">수정</button>
+                <button type="button">삭제</button>
+              </span>
+            </div>   
           </div>
+          <!-- End of Loop Comments -->
+          <!-- Loop Comments -->
+          <div class="loop_contents">
+            <div class="comments_tit">
+              <span>limp36</span> |
+              <span>2021-07-16 14:36:15</span>
+            </div>        
+            <div class="comments_text">
+              <span class="txt">
+                <em>상품이 끼깔나요!!</em>
+              </span>
+            </div>   
+          </div>
+          <!-- End of Loop Comments -->
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <?php include $_SERVER["DOCUMENT_ROOT"]."/zay/include/footer.php"; ?>
+    <?php include $_SERVER["DOCUMENT_ROOT"]."/zay/include/footer.php"; ?>
+
+  </div>
 
   <!-- jQuery Framework Load -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
