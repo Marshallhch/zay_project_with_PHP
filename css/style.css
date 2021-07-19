@@ -159,9 +159,9 @@ section.pro_insert{background:#e9eef5;}
 
 .comments .comments_text{display:flex; justify-content: space-between; padding:10px 0;}
 .comments .comments_text form{width:80%;}
-.comments .comments_text textarea{width:100%; font-family: 'Roboto', 'Noto Sans KR', sans-serif; font-size:14px;}
+.comments .comments_text textarea{width:100%; font-family: 'Roboto', 'Noto Sans KR', sans-serif; font-size:14px; border:1px solid #ccc; display:none;}
 .comments .comments_text button{background:#59ab6e; color:#fff; padding:5px 15px;}
-
+.comments .comments_text button.rev_send{display:none;}
 
 
 

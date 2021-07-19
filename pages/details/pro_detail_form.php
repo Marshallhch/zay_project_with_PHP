@@ -103,7 +103,16 @@
       <div class="center">
         <div class="comments_tit">
           <span>상품평</span> |
-          <span><em>15</em> Comments</span>
+          <?php
+          include $_SERVER["DOCUMENT_ROOT"]."/connect/db_conn.php";
+          $sql_rev = "SELECT * FROM zay_review WHERE ZAY_pro_rev_con_idx=$pro_idx ORDER BY ZAY_pro_rev_idx DESC";
+
+          $rev_result = mysqli_query($dbConn, $sql_rev);
+          $rev_total = mysqli_num_rows($rev_result);
+
+          //echo $rev_total;
+          ?>
+          <span><em><?=$rev_total?></em> Comments</span>
         </div>
         <div class="comment_insert">
           <form action="/zay/php/comment_insert.php?pro_idx=<?=$pro_idx?>&pro_writer=<?=$userid?>" method="post" name="comment_form">
@@ -117,32 +126,44 @@
         </div>
         <div class="comment_contents">
           <?php
-            include $_SERVER["DOCUMENT_ROOT"]."/connect/db_conn.php";
-            $sql_rev = "SELECT * FROM zay_review WHERE ZAY_pro_rev_con_idx=$pro_idx ORDER BY ZAY_pro_rev_idx DESC";
-
-            $rev_result = mysqli_query($dbConn, $sql_rev);
+            
             while($rev_row = mysqli_fetch_array($rev_result)){
               $rev_writer = $rev_row['ZAY_pro_rev_id'];
               $rev_reg = $rev_row['ZAY_pro_rev_reg'];
               $rev_txt = $rev_row['ZAY_pro_rev_txt'];
               $rev_pro_idx = $rev_row['ZAY_pro_rev_con_idx'];
-            ?>
+          ?>
           <!-- Loop Comments -->
           <div class="loop_contents">
             <div class="comments_tit">
               <span><?=$rev_writer?></span> |
               <span><?=$rev_reg?></span>
-            </div>        
-            <div class="comments_text">
-              <form action="#">
-                <em><?=$rev_txt?></em>
-                <!-- <textarea readonly>상품이 별로에요. 배송도 느려요.</textarea> -->
-              </form>     
-              <span class="comment_btns">
-                <button type="button">수정</button>
-                <button type="button">삭제</button>
-              </span>
-            </div>     
+            </div>    
+            <form action="#">    
+              <div class="comments_text">        
+                <em class=""><?=$rev_txt?></em>
+                <textarea><?=$rev_txt?></textarea> 
+              <?php if(!$userid){ ?>
+                <input type="hidden">
+              <?php
+                } else { 
+                  if($userid != $rev_writer){
+              ?>
+                <input type="hidden">
+              <?php
+                  } else {
+              ?>
+                <span class="comment_btns">
+                  <button type="button" class="rev_send">보내기</button>
+                  <button type="button" class="rev_upadte">수정</button>
+                  <button type="button">삭제</button>
+                </span>      
+              <?php
+                  }
+                }
+              ?>       
+              </div> 
+            </form>     
           </div>
           <!-- End of Loop Comments -->
           <?php } ?>  
@@ -157,6 +178,21 @@
   <!-- jQuery Framework Load -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="/zay/js/jq.main.js"></script>
+  <script>
+    $(function(){
+      $(".rev_upadte").click(function(){
+        $(this).toggleClass("on");
+
+        if($(this).hasClass("on")){
+          $(this).text('수정취소');
+          $(this).prev(".rev_send").show();
+        } else {
+          $(this).text('수정');
+          $(this).prev(".rev_send").hide();
+        }
+      });
+    });
+  </script>
   <script>
     function plzLogin(){
       alert('로그인 후 이용해 주세요.');
