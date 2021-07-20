@@ -21,8 +21,36 @@ $(function(){
       url :'/zay/php/like_unlike.php',
       type:'post',
       data:{postId : postId, type : type},
+      dataType:'json',
       success : function(data){
-        console.log(data);
+        //console.log(data);
+        const likes = data.likes;
+        const unlikes = data.unlikes;
+
+        $("#likes_" + postId).text(likes);
+        $("#unlikes_" + postId).text(unlikes);
+
+        if(type == 1){
+          $("#like_" + postId).css({
+            'background':'#59ab6e', 
+            'color':'#fff'
+          });
+          $("#unlike_" + postId).css({
+            'background':'#fff', 
+            'color':'#555'
+          });
+        } else {
+          $("#like_" + postId).css({
+            'background':'#fff', 
+            'color':'#555'
+          });
+          $("#unlike_" + postId).css({
+            'background':'lightcoral', 
+            'color':'#fff'
+          });
+        }
+        // console.log(likes);
+        // console.log(unlikes);
       }
     });
   });

@@ -43,6 +43,7 @@
           $detail_desc = $detail_row['ZAY_pro_desc'];
           $detail_color = $detail_row['ZAY_pro_color'];
           $detail_bran = $detail_row['ZAY_pro_bran'];
+          $like_unlike_type = -1;
 
           //좋아요 싫어요 기능 구현 시작
           $status_query = "SELECT COUNT(*) AS cntStatus, ZAY_like_unlike_type FROM zay_like_unlike WHERE ZAY_like_unlike_userid='{$useridx}' AND ZAY_like_unlike_postid='{$detail_idx}'";
