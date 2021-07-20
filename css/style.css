@@ -65,10 +65,10 @@ header.stick .gnb{font-size:16px;}
 .featured .featured_item em{font-style:normal; font-size:12px; color:#777;}
 
 .like_unlike{width:100%; height:auto; display:flex; justify-content: space-between; padding:10px 0;}
-.like_unlike span{border:1px solid #eee; padding:5px 10px; font-size:11px; font-weight:normal;}
-.like_unlike span:nth-child(1){background:#59ab6e; color:#fff;}
+.like_unlike span{border:1px solid #eee; padding:5px 10px; font-size:11px; font-weight:normal; margin:0 2px; cursor:pointer;}
+/* .like_unlike span:nth-child(1){background:#59ab6e; color:#fff;} */
 .featured_txt{width:100%; color:#212529;}
-.like_unlike span:nth-child(2){background:lightcoral; color:#fff;}
+/* .like_unlike span:nth-child(2){background:lightcoral; color:#fff;} */
 
 .featured .featured_txt h3{font-size:18px; font-weight:400; padding-top: 10px;}
 .featured .featured_txt p{font-size:14px; font-weight:300; padding:10px 0;}
@@ -158,9 +158,10 @@ section.pro_insert{background:#e9eef5;}
 .comments .comment_contents .comments_tit{border-bottom:0;}
 
 .comments .comments_text{display:flex; justify-content: space-between; padding:10px 0;}
-.comments .comments_text form{width:80%;}
-.comments .comments_text textarea{width:100%; font-family: 'Roboto', 'Noto Sans KR', sans-serif; font-size:14px; border:1px solid #ccc; display:none;}
+/* .comments .comments_text form{width:60%;} */
+.comments .comments_text textarea{width:70%; font-family: 'Roboto', 'Noto Sans KR', sans-serif; font-size:14px; border:1px solid #ccc; display:none;}
 .comments .comments_text button{background:#59ab6e; color:#fff; padding:5px 15px;}
+
 .comments .comments_text button.rev_send{display:none;}
 
 

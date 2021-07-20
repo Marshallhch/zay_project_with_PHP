@@ -35,6 +35,7 @@
           $detail_result = mysqli_query($dbConn, $sql);
           $detail_row = mysqli_fetch_array($detail_result);
 
+          $detail_idx = $detail_row['ZAY_pro_idx'];
           $detail_img_1 = $detail_row['ZAY_pro_img_01'];
           $detail_img_2 = $detail_row['ZAY_pro_img_02'];
           $detail_tit = $detail_row['ZAY_pro_name'];
@@ -42,6 +43,30 @@
           $detail_desc = $detail_row['ZAY_pro_desc'];
           $detail_color = $detail_row['ZAY_pro_color'];
           $detail_bran = $detail_row['ZAY_pro_bran'];
+
+          //좋아요 싫어요 기능 구현 시작
+          $status_query = "SELECT COUNT(*) AS cntStatus, ZAY_like_unlike_type FROM zay_like_unlike WHERE ZAY_like_unlike_userid='{$useridx}' AND ZAY_like_unlike_postid='{$detail_idx}'";
+
+          $status_result = mysqli_query($dbConn, $status_query);
+          $status_row = mysqli_fetch_array($status_result);
+          $count_status = $status_row['cntStatus'];
+
+          //$type = $status_row['ZAY_like_unlike_type'];
+          //echo $type;
+
+          if($count_status > 0){
+            $like_unlike_type=$status_row['ZAY_like_unlike_type'];
+          }
+
+          $like_query = "SELECT COUNT(*) cntLikes FROM zay_like_unlike WHERE ZAY_like_unlike_type=1 AND ZAY_like_unlike_postid='{$detail_idx}'";
+          $like_result = mysqli_query($dbConn, $like_query);
+          $like_row = mysqli_fetch_array($like_result);
+          $total_likes = $like_row['cntLikes'];
+
+          $unlike_query = "SELECT COUNT(*) cntUnlikes FROM zay_like_unlike WHERE ZAY_like_unlike_type=0 AND ZAY_like_unlike_postid='{$detail_idx}'";
+          $unlike_result = mysqli_query($dbConn, $unlike_query);
+          $unlike_row = mysqli_fetch_array($unlike_result);
+          $total_unlikes = $unlike_row['cntUnlikes'];
           ?>
 
           <div class="detail_img">
@@ -59,8 +84,12 @@
                 <p><span><i class="fa fa-krw"></i> <?=$detail_pri?></span></p>
                 <div class="detail_like">
                   <div class="like_unlike">
-                    <span>좋아요 | <b>20</b></span>
-                    <span>별로에요 | <b>11</b></span>
+                    <span id="like_<?=$detail_idx?>" class="like" style="<?php if($like_unlike_type == 1){ echo "background:#59ab6e; color:#fff;"; } ?>">좋아요 | 
+                      <b id="likes_<?=$detail_idx?>"><?=$total_likes?></b>
+                    </span>
+                    <span id="unlike_<?=$detail_idx?>" class="unlike" style="<?php if($like_unlike_type == 0){ echo "background:lightcoral; color:#fff;"; } ?>">별로에요 | 
+                      <b id="unlikes_<?=$detail_idx?>"><?=$total_unlikes?></b>
+                    </span>
                   </div>     
                   <p class="gray">Brand : <?=$detail_bran?></p>
                   <div class="detail_desc">
@@ -128,6 +157,7 @@
           <?php
             
             while($rev_row = mysqli_fetch_array($rev_result)){
+              $rev_idx = $rev_row['ZAY_pro_rev_idx'];
               $rev_writer = $rev_row['ZAY_pro_rev_id'];
               $rev_reg = $rev_row['ZAY_pro_rev_reg'];
               $rev_txt = $rev_row['ZAY_pro_rev_txt'];
@@ -139,29 +169,22 @@
               <span><?=$rev_writer?></span> |
               <span><?=$rev_reg?></span>
             </div>    
-            <form action="#">    
+            <form action="/zay/php/comment_update.php?pro_idx=<?=$rev_idx?>&pro_writer=<?=$rev_writer?>" method="post">    
               <div class="comments_text">        
-                <em class=""><?=$rev_txt?></em>
-                <textarea><?=$rev_txt?></textarea> 
+                <em class="rev_txt"><?=$rev_txt?></em>
+                <textarea class="rev_update_txt" name="rev_update_txt"><?=$rev_txt?></textarea> 
               <?php if(!$userid){ ?>
                 <input type="hidden">
-              <?php
-                } else { 
-                  if($userid != $rev_writer){
-              ?>
+              <?php } else { if($userid != $rev_writer){ ?>
                 <input type="hidden">
-              <?php
-                  } else {
-              ?>
+              <?php } else { ?>
                 <span class="comment_btns">
-                  <button type="button" class="rev_send">보내기</button>
+                  <button type="submit" class="rev_send">보내기</button>
                   <button type="button" class="rev_upadte">수정</button>
-                  <button type="button">삭제</button>
+                  <button type="button" class="rev_delete" value="<?=$rev_idx?>">삭제</button>
+                  <input type="hidden" value="<?=$rev_writer?>">
                 </span>      
-              <?php
-                  }
-                }
-              ?>       
+              <?php } } ?>       
               </div> 
             </form>     
           </div>
@@ -178,6 +201,7 @@
   <!-- jQuery Framework Load -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="/zay/js/jq.main.js"></script>
+  <script src="/zay/js/jq.like.unlike.js"></script>
   <script>
     $(function(){
       $(".rev_upadte").click(function(){
@@ -186,10 +210,26 @@
         if($(this).hasClass("on")){
           $(this).text('수정취소');
           $(this).prev(".rev_send").show();
+          $(this).parent(".comment_btns").siblings(".rev_txt").hide();
+          $(this).parent(".comment_btns").siblings(".rev_update_txt").show();
         } else {
           $(this).text('수정');
           $(this).prev(".rev_send").hide();
+          $(this).parent(".comment_btns").siblings(".rev_txt").show();
+          $(this).parent(".comment_btns").siblings(".rev_update_txt").hide();
         }
+      });
+
+      $(".rev_delete").click(function(){
+        const confirmCheck = confirm('정말 삭제하시겠습니까?');
+        //console.log(confirmCheck);
+        if(!confirmCheck){
+          return false;
+        } else {
+          const del_val = $(this).val();
+          const pro_writer = $(this).next("input").val();
+          location.href=`/zay/php/comment_delete.php?del_key=${del_val}&pro_writer=${pro_writer}`;
+        }     
       });
     });
   </script>
