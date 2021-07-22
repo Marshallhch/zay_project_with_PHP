@@ -92,6 +92,7 @@
     });
 
     submitBtn.addEventListener('click', function(){
+
       if(!document.mem_form.mem_id.value){
         alert('아이디를 입력해 주세요');
         document.mem_form.mem_id.focus();
@@ -141,9 +142,9 @@
       if(check == false){
         alert('아이디 중복체크를 눌러 주세요.');
         return;
-      }
-
-      document.mem_form.submit();
+      } else {
+        document.mem_form.submit();
+      }    
     });
 
   </script>
