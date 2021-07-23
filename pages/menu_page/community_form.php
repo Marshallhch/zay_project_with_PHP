@@ -31,29 +31,7 @@
 
       <div class="comm_table comm_center">
         <ul class="comm_row">
-          <li class="comm_tit">
-            <span>번호</span>
-            <span>아이디</span>
-            <span>제목</span>
-            <span>등록일</span>
-            <span>조회수</span>
-          </li>
-
-          <?php
-            include $_SERVER["DOCUMENT_ROOT"]."/connect/db_conn.php";
-            $sql = "SELECT * FROM zay_comm ORDER BY ZAY_comm_idx DESC LIMIT 5";
-
-            $comm_result = mysqli_query($dbConn, $sql);
-            while($comm_row = mysqli_fetch_array($comm_result)){
-          ?>
-          <li class="comm_con">
-            <span>3</span>
-            <span>marshall36</span>
-            <span>사이트 오픈을 축합니다.</span>
-            <span>2021-07-21</span>
-            <span>51</span>
-          </li>
-          <?php } ?>
+          <!-- ajax elements load here... -->
         </ul>
       </div>
       <!-- End of comm_table -->
@@ -70,11 +48,32 @@
         </div>
 
         <div class="paging">
-          <span><i class="fa fa-angle-double-left"></i></span>
-          <span><i class="fa fa-angle-left"></i></span>
-          <span class="num">1</span>
-          <span><i class="fa fa-angle-right"></i></span>
-          <span><i class="fa fa-angle-double-right"></i></span>
+          <span class="angle-double first"><i class="fa fa-angle-double-left"></i></span>
+          <span class="prev angle"><i class="fa fa-angle-left"></i></span>
+
+          <?php
+          include $_SERVER["DOCUMENT_ROOT"]."/connect/db_conn.php";
+          $sql_paging = "SELECT * FROM zay_comm";
+
+          $paging_result = mysqli_query($dbConn, $sql_paging);
+          $total_record = mysqli_num_rows($paging_result);
+          $paging_num = 5;
+
+          if($total_record % $paging_num == 0){
+            $total_page = floor($total_record / $paging_num);//소수점 아래 실수 버림
+          } else {
+            $total_page = floor($total_record / $paging_num) + 1;
+          }
+
+          for($i = 1; $i <= $total_page; $i++){
+          ?>
+
+          <span class="num" onClick="getPage(<?=$i?>)"><?=$i?></span>
+
+          <?php } ?>
+
+          <span class="next angle"><i class="fa fa-angle-right"></i></span>
+          <span class="angle-double last"><i class="fa fa-angle-double-right"></i></span>
         </div>
       </div>
       <!-- End of search paging -->
@@ -98,6 +97,7 @@
           <?php } ?>
         </div>
       </div>
+      <!-- end of write -->
     </div>
   </section>
 
@@ -106,6 +106,7 @@
   <!-- jQuery Framework Load -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="/zay/js/jq.main.js"></script>
+  <script src="/zay/js/jq.comm_ajax.js"></script>
   <script>
     function plzLogin(){
       alert('로그인 후 이용해 주세요.');
