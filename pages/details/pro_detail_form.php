@@ -158,7 +158,7 @@
             <button type="button" onclick="insertTxt()">입력</button>
             <?php } ?>
           </form>
-        </div>
+        </div> <!-- End of comment_insert -->
         <div class="comment_contents">
           <?php
             

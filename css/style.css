@@ -165,7 +165,7 @@ section.pro_insert{background:#e9eef5;}
 .comments .comments_text button.rev_send{display:none;}
 
 /* Community Page Style Code */
-.community .comm_center{width:80%; margin:auto;}
+.comm_center{width:80%; margin:auto;}
 
 .community .comm_table{background:#efefef; padding:20px; border-radius:10px;}
 .community .comm_table li{padding:8px; display:flex;}
@@ -202,10 +202,8 @@ section.pro_insert{background:#e9eef5;}
 .community .write_con textarea{width:100%; height:150px; font-size:14px; font-family: 'Roboto', 'Noto Sans KR', sans-serif;}
 .community .write_con textarea::placeholder{color:#ccc;}
 .community .write_btn{width:100%; height:auto; margin-top:10px; text-align: center;}
-.community .write_btn button, 
+.community .write_btn button,
 .community .write_btn a{background:#59ab6e; color:#fff; padding:8px 25px; border-radius:5px;}
-
-
 
 /* body.h_fit{height:100%; width:100%; position:fixed;}
 section.join.h_fit{height:100%; width:100%;}
