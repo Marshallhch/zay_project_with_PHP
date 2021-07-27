@@ -71,6 +71,13 @@
         <a href="#"><?=$userid?></a>
         <a href="#"><img src="/zay/data/profile/<?=$userprofile?>" alt=""></a>
         <?php } ?>
+        <?php
+          $count=0;
+          if(isset($_SESSION['cart'])){
+            $count=count($_SESSION['cart']);
+          }
+        ?>
+        <a href="/zay/pages/menu_page/cart.php" class="cart"><i class="fa fa-shopping-cart"></i><b><?=$count?></b></a>
       </div>
     </div>  
     <div class="mobile_menu">

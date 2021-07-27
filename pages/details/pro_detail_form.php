@@ -121,10 +121,16 @@
                     <span id="plus">+</span>
                   </p>
                 </div>
-                <div class="detail_btns">
-                  <button type="button">BUY NOW</button>
-                  <button type="button">ADD TO CART</button>
-                </div>
+                <?php //print_r($_SESSION['cart']);?>
+                <form action="/zay/php/cart_control.php" method="post">
+                  <div class="detail_btns">
+                    <button type="button">BUY NOW</button>             
+                    <button type="submit" name="add_to_cart">ADD TO CART</button>      
+                  </div>
+                  <input type="hidden" name="item_img" value="<?=$detail_img_1?>">
+                  <input type="hidden" name="item_name" value="<?=$detail_tit?>">
+                  <input type="hidden" name="item_pri" value="<?=$detail_pri?>">
+                </form>
               </div>
               <!-- end of size quantity -->
             </div>
