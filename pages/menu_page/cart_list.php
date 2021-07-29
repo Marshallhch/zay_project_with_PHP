@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1" />
-  <title>Zay Shop || Search Result</title>
+  <title>Zay Shop || Cart List</title>
   <!-- Favicon Link -->
   <link rel="shortcut icon" href="/zay/img/favicon.ico" type="image/x-icon">
   <link rel="icon" href="/zay/img/favicon.ico" type="image/x-icon">
@@ -25,48 +25,34 @@
   <section class="pro_search">
     <div class="center">
       <div class="tit_box">
-        <h2>Search Result</h2>
+        <h2>Cart List</h2>
         <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt<br> mollit anim id est laborum.</p>
       </div>
 
       <div class="search_lists">
         <?php
-          $pro_search = $_GET['pro_search'];
-
-          include $_SERVER["DOCUMENT_ROOT"]."/connect/db_conn.php";
-          $sql = "SELECT * FROM zay_pro WHERE ZAY_pro_name LIKE '%$pro_search%' ORDER BY ZAY_pro_idx DESC";
-          //LIKE로 유사문자열 검색 시 변수를 {}로 감싸지 않는다.
-
-          $result = mysqli_query($dbConn, $sql);
-          $result_num = mysqli_num_rows($result);
-
-          //echo $result_num;
-          if(!$result_num){
-            echo '<div class="search_item" style="padding:10px 20px; justify-content:center">
-                  검색 결과가 없습니다.
-                  </div>';
-          } else {
-            while($result_row = mysqli_fetch_array($result)){
-              $result_idx = $result_row['ZAY_pro_idx'];
-              $result_name = $result_row['ZAY_pro_name'];
-              $result_desc = $result_row['ZAY_pro_desc'];
-              $result_pri = $result_row['ZAY_pro_pri'];
-              $result_img = $result_row['ZAY_pro_img_01'];
+        if(isset($_SESSION['cart'])){
+          foreach($_SESSION['cart'] as $key => $value){
+            $cart_img = $value['cart_img'];
+            $cart_name = $value['cart_name'];
+            $cart_desc = $value['cart_desc'];
+            $cart_pri = $value['cart_pri'];
+            $cart_quan = $value['cart_quan'];
         ?>
         <div class="search_item">
           <span class="search_img">
-            <a href="/zay/pages/details/pro_detail_form.php?pro_idx=<?=$result_idx?>"><img src="/zay/data/product_imgs/<?=$result_img?>" alt=""></a>
+            <a href="#"><img src="/zay/data/product_imgs/<?=$cart_img?>" alt=""></a>
           </span>
           <span class="search_txt">
-            <h2><?=$result_name?></h2>
-            <p><?=$result_desc?></p>
+            <h2><?=$cart_name?></h2>
+            <p><?=$cart_desc?></p>
           </span>
           <span class="search_pri">
-            <h3><i class="fa fa-krw"></i> <?=$result_pri?></h3>
+            <h3><i class="fa fa-krw"></i> <?=$cart_pri?></h3>
           </span>
           <span class="search_btns">
+            <button>REMOVE ITEM</button>
             <button>BUY NOW</button>
-            <button>ADD TO CART</button>
           </span>
         </div> <!--end of loop search item-->
         <?php } } ?>
