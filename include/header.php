@@ -56,7 +56,7 @@
       <ul class="gnb">
         <li><a href="/zay/index.php">Home</a></li>
         <li><a href="/zay/pages/admin/product_insert_form.php">About</a></li>
-        <li><a href="/zay/pages/menu_page/shop.php">Shop</a></li>
+        <li><a href="/zay/pages/menu_page/shop.php?key=all">Shop</a></li>
         <li><a href="/zay/pages/menu_page/community_form.php">Community</a></li>
       </ul>
       <div class="login_info">
@@ -71,13 +71,6 @@
         <a href="#"><?=$userid?></a>
         <a href="#"><img src="/zay/data/profile/<?=$userprofile?>" alt=""></a>
         <?php } ?>
-        <?php
-          $count=0;
-          if(isset($_SESSION['cart'])){
-            $count=count($_SESSION['cart']);
-          }
-        ?>
-        <a href="/zay/pages/menu_page/cart.php" class="cart"><i class="fa fa-shopping-cart"></i><b><?=$count?></b></a>
       </div>
     </div>  
     <div class="mobile_menu">
